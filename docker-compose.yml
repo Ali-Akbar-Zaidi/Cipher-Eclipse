@@ -1,0 +1,79 @@
+# Cipher Eclipse: full local stack.
+#
+#   docker compose up --build          # build + start both services (Compose v2.24+)
+#   docker compose up -d               # start in background
+#   docker compose logs -f backend     # watch the vulnerability DB build on first run
+#   docker compose push                # push both images to Docker Hub (after docker login)
+#
+# Ports:  backend  -> http://localhost:8000  (API docs at /docs)
+#         frontend -> http://localhost:3000
+#
+# First start downloads the NVD + EPSS feeds and builds vulnerabilities.db
+# (a few minutes, needs internet). It is stored in the `vulndb-data` volume,
+# so later starts skip the build. To force a rebuild:
+#   docker compose run --rm backend python -m vulndb.build_db --force
+
+name: cipher-eclipse
+
+services:
+  backend:
+    image: aliakbarzaidi/cipher-eclipse-backend:${TAG:-latest}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cipher-eclipse-backend
+    init: true   # tiny init as PID 1: forwards signals, reaps the background DB build
+    ports:
+      - "8000:8000"
+    environment:
+      VULNDB_PATH: /app/data/vulnerabilities.db
+      # blocking | background | skip  (see backend/docker-entrypoint.sh)
+      VULNDB_BUILD_MODE: ${VULNDB_BUILD_MODE:-blocking}
+      VULNDB_START_YEAR: ${VULNDB_START_YEAR:-2002}
+      VULNDB_OFFLINE: ${VULNDB_OFFLINE:-0}
+      CORS_ORIGINS: http://localhost:3000
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      UVICORN_WORKERS: ${UVICORN_WORKERS:-1}
+    # Backend secrets (LLM API key, etc.) live in backend/.env (git-ignored).
+    # Copy backend/.env.example to start. The root .env only sets the
+    # ${...} variables used in this compose file.
+    env_file:
+      - path: ./backend/.env
+        required: false
+    volumes:
+      - vulndb-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4).status == 200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      # The first-run DB build happens before uvicorn starts; give it time.
+      start_period: 20m
+      start_interval: 5s
+    restart: unless-stopped
+
+  frontend:
+    image: aliakbarzaidi/cipher-eclipse-frontend:${TAG:-latest}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Baked into the browser bundle: the browser reaches the API via the host port.
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    container_name: cipher-eclipse-frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - path: ./frontend/.env
+        required: false
+    environment:
+      # For server components / route handlers: talk to the backend over the
+      # compose network by service name instead of localhost.
+      API_URL_INTERNAL: http://backend:8000
+    depends_on:
+      backend:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  vulndb-data:

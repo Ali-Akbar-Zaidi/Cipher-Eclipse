@@ -1,0 +1,17 @@
+# Cipher Eclipse backend runtime dependencies.
+# The code runs on Python 3.10+, but these exact pins need Python 3.11+ (fastapi 0.162.6
+# dropped 3.10, which reached end-of-life in Oct 2026). The container uses 3.12.
+# Stuck on 3.10 locally? Use fastapi==0.162.5; everything else is the same.
+# Pinned to exact versions so every teammate and the container resolve the same set.
+# Upgrade deliberately: change a pin, rebuild, run `pytest`.
+
+# --- Web API (Shuja's routing builds on these) ---
+fastapi==0.162.6
+uvicorn[standard]==0.54.0
+
+# --- Async networking (Hadi: crt.sh + DNS; Azaan: Shodan InternetDB) ---
+aiohttp==3.14.5
+aiodns==4.0.4
+
+# --- Offline vulnerability DB builder: streaming JSON parser for huge NVD feeds ---
+ijson==3.6.0

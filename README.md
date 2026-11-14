@@ -1,4 +1,4 @@
-# Cipher Eclipse
+# Cipher Eclipse 🌐🔍
 
 **Passive Attack Surface Mapping and Exploit-Aware Risk Prioritisation**
 
@@ -42,20 +42,27 @@ Cipher Eclipse is a defensive Open Source Intelligence (OSINT) tool designed to 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-org/CipherEclipse.git
-   cd CipherEclipse
+   git clone https://github.com/Ali-Akbar-Zaidi/Cipher-Eclipse.git
+   cd Cipher-Eclipse
    ```
 
 2. **Set up Environment Variables:**
-   * Copy the example `.env` files for both frontend and backend.
+   * Copy the example `.env` files for both frontend and backend:
+     `cp backend/.env.example backend/.env` and `cp frontend/.env.example frontend/.env`.
    * Add your LLM API keys to the backend `.env`.
+   * Optional: `cp .env.example .env` for compose settings (image tag, faster dev DB build).
 
-3. **Run with Docker Compose:**
+3. **Run with Docker Compose** (Compose v2.24+, i.e. the `docker compose` plugin):
    ```bash
-   docker-compose up --build
+   docker compose up --build
    ```
    * The Next.js frontend will be available at `http://localhost:3000`
-   * The FastAPI backend will be available at `http://localhost:8000`
+   * The FastAPI backend will be available at `http://localhost:8000` (API docs at `/docs`)
+   * The first start downloads the NVD, EPSS and CISA KEV datasets and builds the local
+     SQLite cache, which takes a few minutes. Follow it with `docker compose logs -f backend`.
+
+Ingestion, vulnerability cache, Docker and evaluation details:
+[docs/ingestion-and-infra.md](docs/ingestion-and-infra.md).
 
 ---
 

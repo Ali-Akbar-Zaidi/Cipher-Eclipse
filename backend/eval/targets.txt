@@ -1,0 +1,8 @@
+# Evaluation targets, one per line (proposal section 3: only public test hosts
+# and domains whose bug bounty / disclosure programme permits OSINT research).
+#
+# scanme.nmap.org is a single host, so subdomain recall uses its parent zone.
+nmap.org
+# Acunetix public test sites (testphp/testhtml5/testasp/... .vulnweb.com)
+vulnweb.com
+# Add anonymised bug-bounty / VDP domains below, never commit their names publicly.

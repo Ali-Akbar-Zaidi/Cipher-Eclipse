@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+# Data built at runtime (never commit the DB or raw feeds)
+backend/data/
+*.db
+*.db-*
+*.db.tmp
+backend/eval/results/
+backend/eval/labels.csv
+baselines/
+ours/
+# Node
+frontend/node_modules/
+frontend/.next/
+# Secrets
+.env
+.env.*
+!.env.example
