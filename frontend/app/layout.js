@@ -1,11 +1,14 @@
-// PLACEHOLDER: Shuja replaces this app with the real dashboard.
-// Kept only so `docker compose up` works before the real frontend lands.
-export const metadata = { title: "Cipher Eclipse" };
+import "./globals.css";
+
+export const metadata = {
+  title: "Cipher Eclipse",
+  description: "Passive attack surface mapping and exploit-aware risk prioritisation",
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body style={{ fontFamily: "system-ui, sans-serif", margin: "2rem" }}>{children}</body>
+    <html lang="en" className="dark">
+      <body>{children}</body>
     </html>
   );
 }

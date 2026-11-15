@@ -64,6 +64,9 @@ Cipher Eclipse is a defensive Open Source Intelligence (OSINT) tool designed to 
 Ingestion, vulnerability cache, Docker and evaluation details:
 [docs/ingestion-and-infra.md](docs/ingestion-and-infra.md).
 
+API, KEV classifier, LLM summary validation and dashboard details:
+[docs/api-and-frontend.md](docs/api-and-frontend.md).
+
 ---
 
 ## ⚠️ Ethics & Scope

@@ -1,0 +1,112 @@
+{
+  "trained_at": "2026-11-15T21:41:37+00:00",
+  "sklearn_version": "1.9.1",
+  "features": [
+    "cvss_score",
+    "epss_score"
+  ],
+  "label": "in CISA KEV catalogue",
+  "selected_model": "logistic_regression",
+  "model_path": "ml/artifacts/kev_classifier.pkl",
+  "data": {
+    "db": "data/vulnerabilities.db",
+    "rows": 406615,
+    "positives": 1781,
+    "positive_rate": 0.0043800646803487326,
+    "missing_cvss": 4138,
+    "missing_epss": 0,
+    "epss_score_date": "2026-11-15T12:03:04Z",
+    "kev_catalog_version": "2026.11.13",
+    "nvd_built_at": "2026-11-15T21:39:51+00:00"
+  },
+  "split": {
+    "test_size": 0.2,
+    "seed": 42,
+    "train_rows": 325292,
+    "test_rows": 81323,
+    "test_positives": 356
+  },
+  "cross_validation": {
+    "logistic_regression": {
+      "mean_average_precision": 0.36646,
+      "std": 0.03429,
+      "folds": [
+        0.404,
+        0.33399,
+        0.32413,
+        0.40663,
+        0.36357
+      ]
+    },
+    "hist_gradient_boosting": {
+      "mean_average_precision": 0.26092,
+      "std": 0.01567,
+      "folds": [
+        0.27449,
+        0.25487,
+        0.24474,
+        0.28406,
+        0.24643
+      ]
+    }
+  },
+  "test_metrics": {
+    "model:logistic_regression": {
+      "roc_auc": 0.9546,
+      "average_precision": 0.31641,
+      "precision_at_50": 0.76,
+      "precision_at_100": 0.68,
+      "precision_at_500": 0.284,
+      "recall_at_top_1pct": 0.47472,
+      "recall_at_top_5pct": 0.77809,
+      "recall_at_top_10pct": 0.85674,
+      "brier_score": 0.00353
+    },
+    "model:hist_gradient_boosting": {
+      "roc_auc": 0.95901,
+      "average_precision": 0.25128,
+      "precision_at_50": 0.56,
+      "precision_at_100": 0.51,
+      "precision_at_500": 0.284,
+      "recall_at_top_1pct": 0.46067,
+      "recall_at_top_5pct": 0.80056,
+      "recall_at_top_10pct": 0.8764,
+      "brier_score": 0.00362
+    },
+    "baseline:cvss_only": {
+      "roc_auc": 0.75138,
+      "average_precision": 0.01055,
+      "precision_at_50": 0.02,
+      "precision_at_100": 0.01,
+      "precision_at_500": 0.012,
+      "recall_at_top_1pct": 0.02247,
+      "recall_at_top_5pct": 0.1264,
+      "recall_at_top_10pct": 0.30337
+    },
+    "baseline:epss_only": {
+      "roc_auc": 0.95309,
+      "average_precision": 0.30748,
+      "precision_at_50": 0.76,
+      "precision_at_100": 0.65,
+      "precision_at_500": 0.29,
+      "recall_at_top_1pct": 0.46629,
+      "recall_at_top_5pct": 0.76966,
+      "recall_at_top_10pct": 0.8736
+    },
+    "baseline:weighted_score": {
+      "roc_auc": 0.91381,
+      "average_precision": 0.31295,
+      "precision_at_50": 0.82,
+      "precision_at_100": 0.67,
+      "precision_at_500": 0.286,
+      "recall_at_top_1pct": 0.47753,
+      "recall_at_top_5pct": 0.70225,
+      "recall_at_top_10pct": 0.75281
+    }
+  },
+  "baseline_weights": {
+    "cvss": 0.4,
+    "epss": 0.6
+  },
+  "duration_seconds": 30.1
+}

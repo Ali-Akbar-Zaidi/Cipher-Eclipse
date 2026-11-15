@@ -15,3 +15,12 @@ aiodns==4.0.4
 
 # --- Offline vulnerability DB builder: streaming JSON parser for huge NVD feeds ---
 ijson==3.6.0
+
+# --- KEV classifier (Shuja: training + the pickled model Azaan's inference loads) ---
+# The .pkl must be loaded by the same scikit-learn version that trained it.
+scikit-learn==1.9.1
+joblib==1.6.0
+numpy==2.5.5
+
+# --- LLM executive summary (Claude Messages API, structured JSON output) ---
+anthropic==2.8.0

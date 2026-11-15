@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b0d12;
+  --panel: #11141b;
+  --line: #232838;
+  --accent: #f5a524;
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: #d4d7e0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-mono {
+  font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+@layer components {
+  .ce-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 0.6rem;
+  }
+  .ce-input {
+    background: #0b0d12;
+    border: 1px solid var(--line);
+    border-radius: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.85rem;
+    color: #e4e6ec;
+    outline: none;
+  }
+  .ce-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgb(245 165 36 / 0.15);
+  }
+  .ce-select {
+    background: #0b0d12;
+    border: 1px solid var(--line);
+    border-radius: 0.3rem;
+    padding: 0.15rem 0.4rem;
+    color: #e4e6ec;
+  }
+  .ce-btn {
+    background: var(--accent);
+    color: #1a1204;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 0.4rem;
+    padding: 0.5rem 1.2rem;
+  }
+  .ce-btn:hover:not(:disabled) {
+    background: #ffb941;
+  }
+  .ce-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .ce-btn-secondary {
+    border: 1px solid var(--line);
+    color: #c5c9d3;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    padding: 0.45rem 0.8rem;
+  }
+  .ce-btn-secondary:hover:not(:disabled) {
+    border-color: #3a4052;
+    color: #fff;
+  }
+}
+
+/* Loading indicator: a moon sliding across a glowing sun */
+.ce-eclipse {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: #f5a524;
+  box-shadow: 0 0 24px 6px rgb(245 165 36 / 0.45);
+  overflow: hidden;
+}
+.ce-eclipse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--bg);
+  animation: ce-eclipse 2.4s ease-in-out infinite alternate;
+}
+@keyframes ce-eclipse {
+  from { transform: translateX(-70%); }
+  to { transform: translateX(70%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ce-eclipse::after { animation: none; transform: translateX(20%); }
+}
+
+/* React Flow controls in dark */
+.react-flow__controls button {
+  background: #161a23;
+  border-bottom-color: var(--line);
+  fill: #c5c9d3;
+}
+.react-flow__controls button:hover {
+  background: #1f2430;
+}

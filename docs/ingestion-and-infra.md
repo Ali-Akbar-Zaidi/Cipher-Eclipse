@@ -27,14 +27,14 @@ backend/
   Dockerfile                multi-stage, non-root, healthcheck
   docker-entrypoint.sh      builds vulnerabilities.db if missing, then starts uvicorn
   requirements.txt          pinned runtime deps (requirements-dev.txt for tests)
-  app/main.py               starter FastAPI app (Shuja's routing replaces/extends it)
+  app/                      FastAPI routing + scan orchestration (see api-and-frontend.md)
   ingestion/                crt.sh fetch + cleaning, aiodns resolution, pipeline, CLI
   vulndb/                   build_db.py (offline builder), query.py (read-only lookups)
   eval/                     subdomain_recall.py, cve_precision.py, README
   tests/                    50 offline tests (no network needed)
 frontend/
   Dockerfile                Next.js standalone multi-stage build
-  app/, package.json        PLACEHOLDER app so compose works today; Shuja's code replaces it
+  app/, components/, lib/   Next.js dashboard (see api-and-frontend.md)
 ```
 
 ## Quick start (whole team)
